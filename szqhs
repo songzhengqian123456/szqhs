@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鲸落工会 - 校园服务</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --border-radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, #1a5276, #154360);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .developer {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .developer span {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+        }
+        
+        /* 密码保护层 */
+        .password-protection {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1a5276;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            flex-direction: column;
+            padding: 2rem;
+        }
+        
+        .password-box {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .password-box h2 {
+            color: #1a5276;
+            margin-bottom: 1.5rem;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-family: monospace;
+        }
+        
+        .password-input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .password-error {
+            color: #e74c3c;
+            margin-bottom: 1rem;
+            min-height: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        /* 导航样式 */
+        nav {
+            display: flex;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 800px;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--dark);
+            min-width: 140px;
+        }
+        
+        .nav-btn.active {
+            background: #1a5276;
+            color: white;
+        }
+        
+        .nav-btn:hover:not(.active) {
+            background: rgba(26, 82, 118, 0.1);
+        }
+        
+        /* 主要内容区域 */
+        .section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            margin-bottom: 2rem;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .section-title {
+            color: #1a5276;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* 产品卡片 */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .product-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            background: white;
+        }
+        
+        .product-header {
+            padding: 1.5rem;
+            color: white;
+            text-align: center;
+        }
+        
+        .card-campus { background: #2c3e50; }
+        .card-high { background: #e74c3c; }
+        .card-medium { background: #3498db; }
+        .card-low { background: #7f8c8d; }
+        
+        .product-body {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a5276;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            min-height: 60px;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #1a5276;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: #154360;
+        }
+        
+        .btn-buy {
+            background: #e74c3c;
+        }
+        
+        .btn-buy:hover {
+            background: #c0392b;
+        }
+        
+        .btn-full {
+            width: 100%;
+        }
+        
+        /* 购物车样式 */
+        .cart-items {
+            margin-bottom: 1.5rem;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-total {
+            text-align: right;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a5276;
+            padding: 1rem;
+            border-top: 2px solid #1a5276;
+        }
+        
+        /* 订单表单 */
+        .order-form {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            display: none;
+        }
+        
+        /* 订单管理 */
+        .order-management {
+            margin-top: 1.5rem;
+        }
+        
+        .order-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .order-filters select,
+        .order-filters input {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .orders-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .order-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-id {
+            font-weight: 700;
+            color: #1a5276;
+        }
+        
+        .order-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-processing { background: #cce5ff; color: #004085; }
+        .status-completed { background: #d4edda; color: #155724; }
+        
+        .order-info {
+            margin-bottom: 1rem;
+        }
+        
+        .order-items {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        /* 通知样式 */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .notification.success { background: #27ae60; }
+        .notification.error { background: #e74c3c; }
+        .notification.info { background: #3498db; }
+        
+        /* 打印订单样式 */
+        .print-order {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 3px solid #1a5276;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            display: none;
+        }
+        
+        .print-header {
+            text-align: center;
+            border-bottom: 2px solid #1a5276;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .print-header h3 {
+            color: #1a5276;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .print-content {
+            margin-bottom: 1.5rem;
+        }
+        
+        .print-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .print-total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #1a5276;
+            border-top: 2px solid #1a5276;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .print-footer {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #ddd;
+        }
+        
+        .print-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        /* 购物车徽章 */
+        .cart-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(231,76,60,0.3);
+            z-index: 999;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #1a5276;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        /* 订单操作按钮 */
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                flex-direction: column;
+            }
+            
+            .nav-btn {
+                min-width: auto;
+            }
+            
+            .order-filters {
+                flex-direction: column;
+            }
+            
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .print-actions {
+                flex-direction: column;
+            }
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-order, .print-order * {
+                visibility: visible;
+            }
+            .print-order {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+            }
+            .print-actions {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 密码保护层 -->
+    <div class="password-protection" id="password-protection">
+        <div class="password-box">
+            <h2>鲸落工会 - 校园服务系统</h2>
+            <p style="color: #666; margin-bottom: 1.5rem;">请输入访问密码</p>
+            <input type="password" class="password-input" id="access-password" placeholder="请输入密码" autocomplete="off">
+            <div class="password-error" id="password-error"></div>
+            <button class="btn btn-full" id="submit-password">
+                <i class="fas fa-lock"></i> 进入系统
+            </button>
+            <div style="margin-top: 1.5rem;">
+                <p style="font-size: 0.8rem; color: #999; margin-bottom: 0.5rem;">提示：访问密码是您的手机号</p>
+                <p style="font-size: 0.8rem; color: #999;">系统由 <strong>宋政谦</strong> 开发维护</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 购物车快捷按钮 -->
+    <div class="cart-badge" id="cart-badge">
+        <i class="fas fa-shopping-cart"></i>
+        <div class="cart-count" id="cart-count">0</div>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1>鲸落工会 · 2025</h1>
+            <p class="tagline">神木市第十一中校园服务 · 专业校园卡销售与作业服务</p>
+            <div class="developer">
+                <span>系统开发者：宋政谦</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <nav>
+            <button class="nav-btn active" data-section="campus-cards">
+                <i class="fas fa-id-card"></i> 校园卡
+            </button>
+            <button class="nav-btn" data-section="homework">
+                <i class="fas fa-pen-fancy"></i> 作业服务
+            </button>
+            <button class="nav-btn" data-section="cart">
+                <i class="fas fa-shopping-cart"></i> 购物车
+            </button>
+            <button class="nav-btn" data-section="orders">
+                <i class="fas fa-clipboard-list"></i> 订单管理
+            </button>
+            <button class="nav-btn" data-section="management">
+                <i class="fas fa-cog"></i> 系统管理
+            </button>
+        </nav>
+        
+        <!-- 校园卡销售部分 -->
+        <section id="campus-cards" class="section active">
+            <h2 class="section-title">
+                <i class="fas fa-id-card"></i> 校园卡销售
+            </h2>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-header card-campus">
+                        <h3>十一中校园卡</h3>
+                        <p>全新未使用</p>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-title">
+                            <span>校园卡</span>
+                            <div class="price">¥<span id="campus-price">3</span></div>
+                        </div>
+                        <p class="product-description">神木市第十一中专用校园卡，确保没有扫过，可直接使用。</p>
+                        <button class="btn btn-buy btn-full add-to-cart-btn" data-product="校园卡" data-price="3">
+                            <i class="fas fa-cart-plus"></i> 加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 作业服务部分 -->
+        <section id="homework" class="section">
+            <h2 class="section-title">
+                <i class="fas fa-pen-fancy"></i> 作业服务
+            </h2>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-header card-high">
+                        <h3>高级作业</h3>
+                        <p>品质卓越</p>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-title">
+                            <span>高级作业</span>
+                            <div class="price">¥<span id="high-price">8</span></div>
+                        </div>
+                        <p class="product-description">正确率高，字体工整，接近完美答案。</p>
+                        <button class="btn btn-buy btn-full add-to-cart-btn" data-product="高级作业" data-price="8">
+                            <i class="fas fa-cart-plus"></i> 加入购物车
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-header card-medium">
+                        <h3>中级作业</h3>
+                        <p>性价比高</p>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-title">
+                            <span>中级作业</span>
+                            <div class="price">¥<span id="medium-price">4</span></div>
+                        </div>
+                        <p class="product-description">正确率中等，字体中等，满足大部分要求。</p>
+                        <button class="btn btn-buy btn-full add-to-cart-btn" data-product="中级作业" data-price="4">
+                            <i class="fas fa-cart-plus"></i> 加入购物车
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-header card-low">
+                        <h3>低级作业</h3>
+                        <p>经济实惠</p>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-title">
+                            <span>低级作业</span>
+                            <div class="price">¥<span id="low-price">2</span></div>
+                        </div>
+                        <p class="product-description">正确率较低，字体不规范，应急使用。</p>
+                        <button class="btn btn-buy btn-full add-to-cart-btn" data-product="低级作业" data-price="2">
+                            <i class="fas fa-cart-plus"></i> 加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 购物车部分 -->
+        <section id="cart" class="section">
+            <h2 class="section-title">
+                <i class="fas fa-shopping-cart"></i> 购物车
+            </h2>
+            
+            <div class="cart-items" id="cart-items">
+                <p id="empty-cart-message" style="text-align: center; padding: 2rem; color: #666;">
+                    <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: #ccc;"></i>
+                    您的购物车是空的
+                </p>
+            </div>
+            
+            <div class="cart-total">
+                总计：¥<span id="cart-total">0</span>
+            </div>
+            
+            <div class="order-form" id="order-form">
+                <h3 style="color: #1a5276; margin-bottom: 1rem;">订单信息</h3>
+                
+                <div class="form-group">
+                    <label for="customer-name">姓名 *</label>
+                    <input type="text" id="customer-name" placeholder="请输入姓名">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customer-grade">年级 *</label>
+                        <select id="customer-grade">
+                            <option value="">选择年级</option>
+                            <option value="初一">初一</option>
+                            <option value="初二">初二</option>
+                            <option value="初三">初三</option>
+                            <option value="高一">高一</option>
+                            <option value="高二">高二</option>
+                            <option value="高三">高三</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customer-class">班级 *</label>
+                        <input type="text" id="customer-class" placeholder="例如：1班">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="delivery-time">交货时间 *</label>
+                    <input type="datetime-local" id="delivery-time">
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer-phone">联系电话 (可选)</label>
+                    <input type="tel" id="customer-phone" placeholder="方便联系">
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer-note">备注 (可选)</label>
+                    <textarea id="customer-note" rows="3" placeholder="其他要求或说明"></textarea>
+                </div>
+                
+                <button class="btn btn-buy btn-full" id="checkout-btn">
+                    <i class="fas fa-check-circle"></i> 提交订单
+                </button>
+            </div>
+            
+            <!-- 打印订单区域 -->
+            <div class="print-order" id="print-order">
+                <div class="print-header">
+                    <h3>鲸落工会 - 订单凭证</h3>
+                    <div>神木市第十一中校园服务</div>
+                    <div style="font-size: 0.9rem; color: #666;">订单时间: <span id="print-time"></span></div>
+                </div>
+                
+                <div class="print-content">
+                    <div style="margin-bottom: 1rem;">
+                        <div><strong>订单号:</strong> <span id="print-order-id"></span></div>
+                        <div><strong>客户信息:</strong> <span id="print-customer"></span></div>
+                        <div><strong>联系电话:</strong> <span id="print-phone"></span></div>
+                        <div><strong>交货时间:</strong> <span id="print-delivery"></span></div>
+                        <div><strong>备注:</strong> <span id="print-note"></span></div>
+                    </div>
+                    
+                    <div style="font-weight: 600; margin-bottom: 0.5rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem;">
+                        订单详情
+                    </div>
+                    
+                    <div id="print-items">
+                        <!-- 订单商品会动态添加到这里 -->
+                    </div>
+                    
+                    <div class="print-total">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>订单总额:</span>
+                            <span id="print-total">¥0.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="print-footer">
+                    <div>感谢您的惠顾！</div>
+                    <div>请妥善保管此凭证</div>
+                    <div>如有问题请联系: 15037326810</div>
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem;">系统由 <strong>宋政谦</strong> 开发维护</div>
+                </div>
+                
+                <div class="print-actions">
+                    <button class="btn" id="cancel-print">
+                        <i class="fas fa-times"></i> 关闭
+                    </button>
+                    <button class="btn btn-buy" id="do-print">
+                        <i class="fas fa-print"></i> 打印订单
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 订单管理部分 -->
+        <section id="orders" class="section">
+            <h2 class="section-title">
+                <i class="fas fa-clipboard-list"></i> 订单管理
+            </h2>
+            
+            <div class="order-management">
+                <div class="order-filters">
+                    <select id="filter-status">
+                        <option value="">全部状态</option>
+                        <option value="待处理">待处理</option>
+                        <option value="处理中">处理中</option>
+                        <option value="已完成">已完成</option>
+                    </select>
+                    
+                    <select id="filter-grade">
+                        <option value="">全部年级</option>
+                        <option value="初一">初一</option>
+                        <option value="初二">初二</option>
+                        <option value="初三">初三</option>
+                        <option value="高一">高一</option>
+                        <option value="高二">高二</option>
+                        <option value="高三">高三</option>
+                    </select>
+                    
+                    <input type="text" id="search-order" placeholder="搜索订单号或姓名">
+                    
+                    <button class="btn" id="refresh-orders">
+                        <i class="fas fa-sync-alt"></i> 刷新
+                    </button>
+                    
+                    <button class="btn btn-buy" id="export-orders">
+                        <i class="fas fa-download"></i> 导出数据
+                    </button>
+                </div>
+                
+                <div class="orders-list" id="orders-list">
+                    <p id="no-orders-message" style="text-align: center; padding: 3rem; color: #666;">
+                        <i class="fas fa-clipboard-list" style="font-size: 3rem; margin-bottom: 1rem; display: block; color: #ccc;"></i>
+                        暂无订单数据
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 系统管理部分 -->
+        <section id="management" class="section">
+            <h2 class="section-title">
+                <i class="fas fa-cog"></i> 系统管理
+            </h2>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: var(--border-radius);">
+                <div class="form-group">
+                    <label>管理员密码</label>
+                    <div style="display: flex; gap: 1rem;">
+                        <input type="password" id="admin-password" placeholder="输入管理员密码" style="flex: 1;">
+                        <button class="btn" id="verify-password">
+                            <i class="fas fa-key"></i> 验证
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="price-controls" style="display: none; margin-top: 2rem;">
+                    <h3 style="color: #1a5276; margin-bottom: 1rem;">价格管理</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>校园卡价格 (元)</label>
+                            <input type="number" id="edit-campus-price" min="0" step="0.5" value="3">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>高级作业价格 (元)</label>
+                            <input type="number" id="edit-high-price" min="0" step="0.5" value="8">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>中级作业价格 (元)</label>
+                            <input type="number" id="edit-medium-price" min="0" step="0.5" value="4">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>低级作业价格 (元)</label>
+                            <input type="number" id="edit-low-price" min="0" step="0.5" value="2">
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-buy btn-full" id="save-prices">
+                        <i class="fas fa-save"></i> 保存价格设置
+                    </button>
+                    
+                    <!-- 开发者信息 -->
+                    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #ddd;">
+                        <h3 style="color: #1a5276; margin-bottom: 1rem;">系统信息</h3>
+                        
+                        <div style="background: white; padding: 1rem; border-radius: 4px; border: 1px solid #ddd;">
+                            <div style="margin-bottom: 0.5rem;"><strong>系统名称:</strong> 鲸落工会校园服务系统</div>
+                            <div style="margin-bottom: 0.5rem;"><strong>版本:</strong> 2025 v1.0</div>
+                            <div style="margin-bottom: 0.5rem;"><strong>开发者:</strong> <strong>宋政谦</strong></div>
+                            <div style="margin-bottom: 0.5rem;"><strong>联系电话:</strong> 15037326810</div>
+                            <div><strong>开发时间:</strong> 2025年</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 数据管理 -->
+                    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #ddd;">
+                        <h3 style="color: #1a5276; margin-bottom: 1rem;">数据管理</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <button class="btn btn-full" id="clear-orders" style="background: #e74c3c;">
+                                    <i class="fas fa-trash"></i> 清空订单数据
+                                </button>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button class="btn btn-full" id="clear-cart" style="background: #f39c12;">
+                                    <i class="fas fa-shopping-cart"></i> 清空购物车
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 核心变量
+        const ADMIN_PASSWORD = "15037326810Szq";
+        const ACCESS_PASSWORD = "15037326810"; // 访问密码就是您的手机号
+        let cart = [];
+        let orders = [];
+        
+        // 页面加载
+        document.addEventListener('DOMContentLoaded', function() {
+            // 阻止F12和右键菜单（简单保护）
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                // 阻止F12
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                    return false;
+                }
+                // 阻止Ctrl+Shift+I
+                if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                    e.preventDefault();
+                    return false;
+                }
+                // 阻止Ctrl+U
+                if (e.ctrlKey && e.key === 'u') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            // 密码提交
+            const passwordInput = document.getElementById('access-password');
+            document.getElementById('submit-password').addEventListener('click', verifyAccess);
+            
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    verifyAccess();
+                }
+            });
+            
+            // 从本地存储加载数据
+            loadFromStorage();
+            
+            // 初始化购物车徽章
+            updateCartBadge();
+            
+            // 设置导航切换
+            setupNavigation();
+            
+            // 购物车徽章点击
+            document.getElementById('cart-badge').addEventListener('click', function() {
+                switchSection('cart');
+            });
+            
+            // 加入购物车按钮事件委托
+            document.addEventListener('click', handleClickEvents);
+            
+            // 密码验证
+            document.getElementById('verify-password').addEventListener('click', verifyPassword);
+            
+            // 保存价格
+            document.getElementById('save-prices').addEventListener('click', savePrices);
+            
+            // 提交订单
+            document.getElementById('checkout-btn').addEventListener('click', checkout);
+            
+            // 订单管理相关
+            document.getElementById('refresh-orders').addEventListener('click', loadOrders);
+            document.getElementById('export-orders').addEventListener('click', exportOrders);
+            document.getElementById('filter-status').addEventListener('change', loadOrders);
+            document.getElementById('filter-grade').addEventListener('change', loadOrders);
+            document.getElementById('search-order').addEventListener('input', loadOrders);
+            
+            // 数据管理
+            document.getElementById('clear-orders').addEventListener('click', clearOrders);
+            document.getElementById('clear-cart').addEventListener('click', clearCart);
+            
+            // 打印功能
+            document.getElementById('do-print').addEventListener('click', doPrint);
+            document.getElementById('cancel-print').addEventListener('click', cancelPrint);
+            
+            // 设置默认交货时间
+            setDefaultDeliveryTime();
+            
+            // 初始更新购物车显示
+            updateCartDisplay();
+        });
+        
+        // 验证访问密码 - 修复版
+        function verifyAccess() {
+            const passwordInput = document.getElementById('access-password');
+            const errorElement = document.getElementById('password-error');
+            const enteredPassword = passwordInput.value;
+            
+            if (enteredPassword === ACCESS_PASSWORD) {
+                // 密码正确，隐藏保护层
+                document.getElementById('password-protection').style.display = 'none';
+                // 加载订单列表
+                loadOrders();
+                showNotification('欢迎进入鲸落工会系统', 'success');
+            } else {
+                // 密码错误
+                errorElement.textContent = '密码错误，请重试（提示：密码是15037326810）';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+        
+        // 加载数据
+        function loadFromStorage() {
+            const savedCart = localStorage.getItem('whale_cart');
+            const savedOrders = localStorage.getItem('whale_orders');
+            
+            if (savedCart) cart = JSON.parse(savedCart);
+            if (savedOrders) orders = JSON.parse(savedOrders);
+        }
+        
+        // 保存数据
+        function saveToStorage() {
+            localStorage.setItem('whale_cart', JSON.stringify(cart));
+            localStorage.setItem('whale_orders', JSON.stringify(orders));
+        }
+        
+        // 设置导航
+        function setupNavigation() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    const sectionId = this.getAttribute('data-section');
+                    document.getElementById(sectionId).classList.add('active');
+                    
+                    if (sectionId === 'cart') updateCartDisplay();
+                    if (sectionId === 'orders') loadOrders();
+                });
+            });
+        }
+        
+        // 切换页面
+        function switchSection(sectionId) {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            
+            document.querySelector(`.nav-btn[data-section="${sectionId}"]`).classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
+            
+            if (sectionId === 'cart') updateCartDisplay();
+            if (sectionId === 'orders') loadOrders();
+        }
+        
+        // 事件处理
+        function handleClickEvents(e) {
+            // 加入购物车
+            if (e.target.classList.contains('add-to-cart-btn')) {
+                const product = e.target.getAttribute('data-product');
+                const price = parseFloat(e.target.getAttribute('data-price'));
+                addToCart(product, price);
+                return;
+            }
+            
+            // 购物车内按钮
+            if (e.target.classList.contains('cart-btn')) {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                const action = e.target.getAttribute('data-action');
+                
+                if (action === 'increase') {
+                    cart[index].quantity += 1;
+                } else if (action === 'decrease') {
+                    cart[index].quantity -= 1;
+                    if (cart[index].quantity <= 0) cart.splice(index, 1);
+                } else if (action === 'remove') {
+                    cart.splice(index, 1);
+                    showNotification('商品已移除', 'success');
+                }
+                
+                saveCart();
+                updateCartDisplay();
+                updateCartBadge();
+                return;
+            }
+            
+            // 订单操作按钮
+            if (e.target.classList.contains('order-action-btn')) {
+                const orderId = e.target.getAttribute('data-order-id');
+                const action = e.target.getAttribute('data-action');
+                handleOrderAction(orderId, action);
+                return;
+            }
+        }
+        
+        // 核心功能函数
+        function addToCart(product, price) {
+            const existing = cart.find(item => item.product === product);
+            
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    product: product,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            saveCart();
+            updateCartDisplay();
+            updateCartBadge();
+            showNotification(`${product} 已加入购物车`, 'success');
+        }
+        
+        function updateCartDisplay() {
+            const container = document.getElementById('cart-items');
+            const totalElement = document.getElementById('cart-total');
+            const orderForm = document.getElementById('order-form');
+            
+            container.innerHTML = '';
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p id="empty-cart-message" style="text-align: center; padding: 2rem; color: #666;"><i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: #ccc;"></i>您的购物车是空的</p>';
+                orderForm.style.display = 'none';
+                totalElement.textContent = '0';
+                return;
+            }
+            
+            orderForm.style.display = 'block';
+            
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 5px;">${item.product}</div>
+                        <div style="color: #666; font-size: 0.9rem;">¥${item.price} × ${item.quantity}</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #1a5276; margin-bottom: 10px;">¥${itemTotal.toFixed(2)}</div>
+                        <div style="display: flex; gap: 5px;">
+                            <button class="cart-btn" data-index="${index}" data-action="decrease" style="padding: 5px 10px; border: none; background: #eee; border-radius: 3px; cursor: pointer;">-</button>
+                            <button class="cart-btn" data-index="${index}" data-action="increase" style="padding: 5px 10px; border: none; background: #eee; border-radius: 3px; cursor: pointer;">+</button>
+                            <button class="cart-btn" data-index="${index}" data-action="remove" style="padding: 5px 10px; border: none; background: #ffebee; color: #e74c3c; border-radius: 3px; cursor: pointer;">删除</button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(itemElement);
+            });
+            
+            totalElement.textContent = total.toFixed(2);
+        }
+        
+        function updateCartBadge() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+        
+        function saveCart() {
+            localStorage.setItem('whale_cart', JSON.stringify(cart));
+        }
+        
+        function verifyPassword() {
+            const password = document.getElementById('admin-password').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('price-controls').style.display = 'block';
+                showNotification('验证成功', 'success');
+            } else {
+                showNotification('密码错误', 'error');
+            }
+        }
+        
+        function savePrices() {
+            document.getElementById('campus-price').textContent = document.getElementById('edit-campus-price').value;
+            document.getElementById('high-price').textContent = document.getElementById('edit-high-price').value;
+            document.getElementById('medium-price').textContent = document.getElementById('edit-medium-price').value;
+            document.getElementById('low-price').textContent = document.getElementById('edit-low-price').value;
+            
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                const product = btn.getAttribute('data-product');
+                if (product === '校园卡') btn.setAttribute('data-price', document.getElementById('edit-campus-price').value);
+                if (product === '高级作业') btn.setAttribute('data-price', document.getElementById('edit-high-price').value);
+                if (product === '中级作业') btn.setAttribute('data-price', document.getElementById('edit-medium-price').value);
+                if (product === '低级作业') btn.setAttribute('data-price', document.getElementById('edit-low-price').value);
+            });
+            
+            showNotification('价格已更新', 'success');
+        }
+        
+        // 提交订单并弹出打印提示
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('购物车为空', 'error');
+                return;
+            }
+            
+            const name = document.getElementById('customer-name').value.trim();
+            const grade = document.getElementById('customer-grade').value;
+            const className = document.getElementById('customer-class').value.trim();
+            const deliveryTime = document.getElementById('delivery-time').value;
+            const phone = document.getElementById('customer-phone').value.trim();
+            const note = document.getElementById('customer-note').value.trim();
+            
+            if (!name || !grade || !className || !deliveryTime) {
+                showNotification('请填写完整信息', 'error');
+                return;
+            }
+            
+            // 生成订单
+            const orderId = 'JL' + Date.now().toString().slice(-6);
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            const order = {
+                id: orderId,
+                date: new Date().toLocaleString('zh-CN'),
+                customer: { 
+                    name, 
+                    grade, 
+                    className,
+                    phone,
+                    note
+                },
+                deliveryTime: new Date(deliveryTime).toLocaleString('zh-CN'),
+                items: [...cart],
+                total: total,
+                status: '待处理'
+            };
+            
+            // 添加到订单列表
+            orders.unshift(order);
+            saveToStorage();
+            
+            // 清空购物车
+            cart = [];
+            saveCart();
+            updateCartDisplay();
+            updateCartBadge();
+            
+            // 清空表单
+            document.getElementById('customer-name').value = '';
+            document.getElementById('customer-grade').value = '';
+            document.getElementById('customer-class').value = '';
+            document.getElementById('customer-phone').value = '';
+            document.getElementById('customer-note').value = '';
+            
+            // 显示打印订单界面
+            showPrintOrder(order);
+        }
+        
+        // 显示打印订单界面
+        function showPrintOrder(order) {
+            // 填充打印内容
+            document.getElementById('print-time').textContent = order.date;
+            document.getElementById('print-order-id').textContent = order.id;
+            document.getElementById('print-customer').textContent = `${order.customer.name} (${order.customer.grade}${order.customer.class})`;
+            document.getElementById('print-phone').textContent = order.customer.phone || '未提供';
+            document.getElementById('print-delivery').textContent = order.deliveryTime;
+            document.getElementById('print-note').textContent = order.customer.note || '无';
+            document.getElementById('print-total').textContent = `¥${order.total.toFixed(2)}`;
+            
+            // 填充订单商品
+            const printItems = document.getElementById('print-items');
+            printItems.innerHTML = '';
+            
+            order.items.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'print-item';
+                itemElement.innerHTML = `
+                    <span>${item.product} × ${item.quantity}</span>
+                    <span>¥${(item.price * item.quantity).toFixed(2)}</span>
+                `;
+                printItems.appendChild(itemElement);
+            });
+            
+            // 显示打印界面
+            document.getElementById('print-order').style.display = 'block';
+            showNotification('订单提交成功！请打印订单凭证', 'success');
+        }
+        
+        // 执行打印
+        function doPrint() {
+            window.print();
+        }
+        
+        // 取消打印
+        function cancelPrint() {
+            document.getElementById('print-order').style.display = 'none';
+            // 切换到订单管理页面
+            switchSection('orders');
+        }
+        
+        function loadOrders() {
+            const container = document.getElementById('orders-list');
+            const filterStatus = document.getElementById('filter-status').value;
+            const filterGrade = document.getElementById('filter-grade').value;
+            const searchText = document.getElementById('search-order').value.toLowerCase();
+            
+            container.innerHTML = '';
+            
+            let filteredOrders = orders;
+            
+            // 应用筛选
+            if (filterStatus) {
+                filteredOrders = filteredOrders.filter(order => order.status === filterStatus);
+            }
+            
+            if (filterGrade) {
+                filteredOrders = filteredOrders.filter(order => order.customer.grade === filterGrade);
+            }
+            
+            if (searchText) {
+                filteredOrders = filteredOrders.filter(order => 
+                    order.id.toLowerCase().includes(searchText) ||
+                    order.customer.name.toLowerCase().includes(searchText)
+                );
+            }
+            
+            if (filteredOrders.length === 0) {
+                container.innerHTML = '<p id="no-orders-message" style="text-align: center; padding: 3rem; color: #666;"><i class="fas fa-clipboard-list" style="font-size: 3rem; margin-bottom: 1rem; display: block; color: #ccc;"></i>暂无订单数据</p>';
+                return;
+            }
+            
+            filteredOrders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card';
+                
+                const itemsList = order.items.map(item => 
+                    `<div class="order-item">
+                        <span>${item.product} × ${item.quantity}</span>
+                        <span>¥${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>`
+                ).join('');
+                
+                const statusClass = {
+                    '待处理': 'status-pending',
+                    '处理中': 'status-processing',
+                    '已完成': 'status-completed'
+                }[order.status] || 'status-pending';
+                
+                orderCard.innerHTML = `
+                    <div class="order-header">
+                        <div>
+                            <span class="order-id">${order.id}</span>
+                            <span class="order-status ${statusClass}" style="margin-left: 10px;">${order.status}</span>
+                        </div>
+                        <div style="color: #666; font-size: 0.9rem;">${order.date}</div>
+                    </div>
+                    
+                    <div class="order-info">
+                        <div><strong>客户:</strong> ${order.customer.name} (${order.customer.grade}${order.customer.class})</div>
+                        <div><strong>电话:</strong> ${order.customer.phone || '未提供'}</div>
+                        <div><strong>交货时间:</strong> ${order.deliveryTime}</div>
+                        <div><strong>备注:</strong> ${order.customer.note || '无'}</div>
+                    </div>
+                    
+                    <div class="order-items">
+                        <div style="font-weight: 600; color: #1a5276; margin-bottom: 10px;">订单详情:</div>
+                        ${itemsList}
+                        <div class="order-item" style="font-weight: bold; border-top: 2px solid #1a5276; margin-top: 10px; padding-top: 10px;">
+                            <span>总计</span>
+                            <span>¥${order.total.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="order-actions">
+                        <button class="btn order-action-btn" data-order-id="${order.id}" data-action="process" ${order.status !== '待处理' ? 'disabled style="opacity: 0.5;"' : ''}>
+                            <i class="fas fa-play"></i> 开始处理
+                        </button>
+                        <button class="btn order-action-btn" data-order-id="${order.id}" data-action="complete" ${order.status !== '处理中' ? 'disabled style="opacity: 0.5;"' : ''}>
+                            <i class="fas fa-check"></i> 完成订单
+                        </button>
+                        <button class="btn order-action-btn" data-order-id="${order.id}" data-action="delete" style="background: #e74c3c;">
+                            <i class="fas fa-trash"></i> 删除订单
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(orderCard);
+            });
+        }
+        
+        function handleOrderAction(orderId, action) {
+            const orderIndex = orders.findIndex(order => order.id === orderId);
+            if (orderIndex === -1) return;
+            
+            switch(action) {
+                case 'process':
+                    orders[orderIndex].status = '处理中';
+                    showNotification('订单已开始处理', 'info');
+                    break;
+                case 'complete':
+                    orders[orderIndex].status = '已完成';
+                    showNotification('订单已完成', 'success');
+                    break;
+                case 'delete':
+                    if (confirm('确定删除此订单吗？')) {
+                        orders.splice(orderIndex, 1);
+                        showNotification('订单已删除', 'success');
+                    }
+                    break;
+            }
+            
+            saveToStorage();
+            loadOrders();
+        }
+        
+        function exportOrders() {
+            if (orders.length === 0) {
+                showNotification('没有订单数据可导出', 'error');
+                return;
+            }
+            
+            let csvContent = "订单号,下单时间,客户姓名,年级,班级,电话,交货时间,订单总额,状态,备注\n";
+            
+            orders.forEach(order => {
+                const row = [
+                    order.id,
+                    order.date,
+                    order.customer.name,
+                    order.customer.grade,
+                    order.customer.className,
+                    order.customer.phone || '',
+                    order.deliveryTime,
+                    order.total,
+                    order.status,
+                    order.customer.note || ''
+                ].map(item => `"${item}"`).join(',');
+                
+                csvContent += row + "\n";
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `鲸落工会订单_${new Date().toLocaleDateString('zh-CN')}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('订单数据已导出', 'success');
+        }
+        
+        function clearOrders() {
+            if (orders.length === 0) {
+                showNotification('没有订单数据可清空', 'error');
+                return;
+            }
+            
+            if (confirm('确定要清空所有订单数据吗？此操作不可恢复！')) {
+                orders = [];
+                saveToStorage();
+                loadOrders();
+                showNotification('订单数据已清空', 'success');
+            }
+        }
+        
+        function clearCart() {
+            if (cart.length === 0) {
+                showNotification('购物车已是空的', 'error');
+                return;
+            }
+            
+            if (confirm('确定要清空购物车吗？')) {
+                cart = [];
+                saveCart();
+                updateCartDisplay();
+                updateCartBadge();
+                showNotification('购物车已清空', 'success');
+            }
+        }
+        
+        function setDefaultDeliveryTime() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('delivery-time').value = tomorrow.toISOString().slice(0, 16);
+        }
+        
+        function showNotification(message, type) {
+            const old = document.querySelector('.notification');
+            if (old) old.remove();
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
